@@ -72,29 +72,29 @@ public class RegisterUserController extends HttpServlet {
 		String userPasswordConfirm=request.getParameter("password2");
 		
 		//TO-DO: Check if user email exists
-		
-		if(DBUtility.existsinDB("`quizit`.`users`", userEmail, "user_email")) {
+		System.out.println("Test Case: 1");
+		if(DBUtility.existsinDB("`quizit`.`user`", userEmail, "user_email")) {
 			HttpSession session = request.getSession();
-			session.setAttribute("emailExists", "true");
+			request.setAttribute("emailExists", "true");
 			RequestDispatcher rd = request.getRequestDispatcher("RegisterPage.jsp");
 			rd.forward(request, response);
 		}
-		
+		System.out.println("Test Case: 2");
 		//If Passwords dont match then redirect back to the registration page with error attribute
 		if(!userPassword.equals(userPasswordConfirm)) {
 			HttpSession session = request.getSession();
-			session.setAttribute("passMatch", "false");
+			request.setAttribute("passMatch", "false");
 			RequestDispatcher rd = request.getRequestDispatcher("RegisterPage.jsp");
 			rd.forward(request, response);
 		}
 		
 		String query = "INSERT INTO `quizit`.`user` (user_first_name, user_last_name, user_email, user_password) "
 				+ "values('" + userFirstName +"','" + userLastName + "','" + userEmail + "', '" + userPassword +"')";
-		
+		System.out.println("Test Case: 3");
 		System.out.println(DBUtility.updateQuery(query));
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("userID", "2");
+		
+		request.setAttribute("userID", "2");
 		
 		RequestDispatcher rd = request.getRequestDispatcher("UserDashboard.jsp");
 		rd.forward(request, response);
