@@ -12,7 +12,7 @@
 			 <div class="form">
 			    <form class="login-form" action="GuestLoginController" method="post">
 			   	  <div class="login-header">Have a Quiz Access Code?</div>
-			      <input type="text" placeholder="code"/>
+			      <input type="text" placeholder="code" required/>
 			      <button>Start Test as Guest</button>
 			      <p class="message">Want to Register? <a href="RegisterPage.jsp">Register</a></p>
 			      <p class="message">Have an Account? <a href="LoginPage.jsp">Log in</a></p>

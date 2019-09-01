@@ -12,8 +12,8 @@
 		  <div class="form">
 		    <form class="login-form" action="LoginUserController" method="post">
 		   	  <div class="login-header">Welcome to Quiz Lit!</div>
-		      <input type="text" placeholder="email"/>
-		      <input type="password" placeholder="password"/>
+		      <input type="text" placeholder="email" required/>
+		      <input type="password" placeholder="password" required/>
 		      <button>login</button>
 		      <p class="message">Not registered? <a href="RegisterPage.jsp">Register</a></p>
 		      <p class="message">Have a Quiz Access Code? <a href="GuestPage.jsp">Guest Sign In</a></p>
