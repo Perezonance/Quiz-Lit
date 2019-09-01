@@ -22,8 +22,7 @@ public class DBUtility {
 	
 	private Properties prop = new Properties();
 	private static Connection connection;
-	
-	File propFile;
+	private File propFile;
 	
 	public DBUtility() {
 		this(new File("db_default.properties"));
@@ -39,12 +38,14 @@ public class DBUtility {
 			}else {
 				
 				OutputStream output = new FileOutputStream(f);
-				
+				/*
+				 * Change the Default db.user value and db.pass value to accomodate your own MySQL Server
+				 */
 				f.createNewFile();
 				prop.setProperty("db.driver", "com.mysql.cj.jdbc.Driver");
 				prop.setProperty("db.url", "jdbc:mysql://localhost:3306/");
 				prop.setProperty("db.user", "root");
-				prop.setProperty("db.pass", "3.141592Map97");
+				prop.setProperty("db.pass", "root");
 				
 				prop.store(output, "");
 				propFile = f;
@@ -261,5 +262,20 @@ public class DBUtility {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	public static boolean existsinDB(String table, String value, String columnType) {
+		String query = "SELECT " + columnType + " FROM " + table + " WHERE " + columnType + " = " + value;
+		ResultSet rs = executeQuery(query);
+		boolean response = false;
+		try {
+			if(rs.first())
+				response = false;
+			else
+				response = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response;
 	}
 }
