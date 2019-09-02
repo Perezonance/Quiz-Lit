@@ -71,30 +71,28 @@ public class RegisterUserController extends HttpServlet {
 		String userPassword=request.getParameter("user_password");
 		String userPasswordConfirm=request.getParameter("password2");
 		
-		//TO-DO: Check if user email exists
-		System.out.println("Test Case: 1");
+		//TO-DO: Check if user email already exists
+		
 		if(DBUtility.existsinDB("`quizit`.`user`", userEmail, "user_email")) {
-			HttpSession session = request.getSession();
 			request.setAttribute("emailExists", "true");
 			RequestDispatcher rd = request.getRequestDispatcher("RegisterPage.jsp");
 			rd.forward(request, response);
 		}
-		System.out.println("Test Case: 2");
+		
 		//If Passwords dont match then redirect back to the registration page with error attribute
 		if(!userPassword.equals(userPasswordConfirm)) {
-			HttpSession session = request.getSession();
 			request.setAttribute("passMatch", "false");
 			RequestDispatcher rd = request.getRequestDispatcher("RegisterPage.jsp");
 			rd.forward(request, response);
 		}
 		
-		String query = "INSERT INTO `quizit`.`user` (user_first_name, user_last_name, user_email, user_password) "
-				+ "values('" + userFirstName +"','" + userLastName + "','" + userEmail + "', '" + userPassword +"')";
-		System.out.println("Test Case: 3");
+		String query = "INSERT INTO `quizit`.`user` (user_first_name, user_last_name, user_email, user_password, user_role_type) "
+				+ "values('" + userFirstName +"','" + userLastName + "','" + userEmail + "', '" + userPassword +"', 'user' )";
 		System.out.println(DBUtility.updateQuery(query));
 		
+		HttpSession session = request.getSession();
 		
-		request.setAttribute("userID", "2");
+		session.setAttribute("userID", "2");
 		
 		RequestDispatcher rd = request.getRequestDispatcher("UserDashboard.jsp");
 		rd.forward(request, response);

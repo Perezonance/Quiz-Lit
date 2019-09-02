@@ -231,17 +231,18 @@ public class DBUtility {
 		return rs;
 	}
 	public static ResultSet executeQuery(String query) {
+		System.out.println(query);
 		ResultSet rs = null;
 		Statement st;
 		try {
-			 st = connection.createStatement();
+			st = connection.createStatement();
 			 rs = st.executeQuery(query);
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		}
+		}	
 		return rs;
 	}
 	public static String printResultSet(ResultSet rs) {

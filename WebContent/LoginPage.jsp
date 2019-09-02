@@ -8,12 +8,20 @@
 		<link rel="stylesheet" href="loginStyling.css">
 	</head>
 	<body>
+		<%
+			String invalidLogin = (String)request.getAttribute("invalidLogin");
+			if(invalidLogin != null){
+				if(invalidLogin.equals("true")){
+					out.print("<p>The email and password do not match our records.</p>");
+				}
+			}
+		%>
 		<div class="login-page">
 		  <div class="form">
 		    <form class="login-form" action="LoginUserController" method="post">
 		   	  <div class="login-header">Welcome to Quiz Lit!</div>
-		      <input type="text" placeholder="email" required/>
-		      <input type="password" placeholder="password" required/>
+		      <input type="text" name = "email" placeholder="email" required/>
+		      <input type="password" name = "password" placeholder="password" required/>
 		      <button>login</button>
 		      <p class="message">Not registered? <a href="RegisterPage.jsp">Register</a></p>
 		      <p class="message">Have a Quiz Access Code? <a href="GuestPage.jsp">Guest Sign In</a></p>

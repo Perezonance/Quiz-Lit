@@ -18,7 +18,7 @@
 			}
 			String pass = (String)request.getAttribute("passMatch");
 			if(pass != null){
-				if(pass.equals("true")){
+				if(pass.equals("false")){
 					out.print("<p> Uh Oh! Your passwords don't match.</p>");
 				}
 			}
