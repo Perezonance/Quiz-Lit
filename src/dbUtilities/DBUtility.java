@@ -200,10 +200,10 @@ public class DBUtility {
 		return true;
 	}
 	public static int updateQuery(String query) {
+		System.out.println(query);
 		Statement st;
 		int rowsAffected = 0;
 		try {
-			
 			 st = connection.createStatement();
 			 rowsAffected = st.executeUpdate(query);    
 		} catch(SQLException e) {
@@ -264,14 +264,16 @@ public class DBUtility {
 		return "";
 	}
 	public static boolean existsinDB(String table, String value, String columnType) {
-		String query = "SELECT " + columnType + " FROM " + table + " WHERE " + columnType + " = " + value;
+		String query = "SELECT `" + columnType + "` FROM " + table + " WHERE `" + columnType + "` = '" + value + "';";
+		System.out.println(query);
 		ResultSet rs = executeQuery(query);
+		System.out.println(printResultSet(rs));
 		boolean response = false;
 		try {
-			if(rs.first())
-				response = false;
-			else
+			if(rs.getString(1).equals(value))
 				response = true;
+			else
+				response = false;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
