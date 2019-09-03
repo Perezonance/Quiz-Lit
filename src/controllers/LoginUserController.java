@@ -26,6 +26,8 @@ public class LoginUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private DBUtility db;
+
+// test comment
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -49,7 +51,7 @@ public class LoginUserController extends HttpServlet {
 	 * @see Servlet#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	/**
