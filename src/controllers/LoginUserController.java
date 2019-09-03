@@ -26,8 +26,6 @@ public class LoginUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private DBUtility db;
-
-// test comment
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,7 +49,7 @@ public class LoginUserController extends HttpServlet {
 	 * @see Servlet#destroy()
 	 */
 	public void destroy() {
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -111,40 +109,25 @@ public class LoginUserController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
+		/*
+		 * Sign in to User Dashboard or Admin Dashboard depending on whether they are one or the other:
+		 * 1. Run a query on the DB: SELECT user_role_type FROM....
+		 * 2. USe the resultset to determin if the user is admin or user
+		 * 3. Use request Dispatcher to forward them to the correct dashboard page
+		 */
+		
+		
+		
+		
+		
+		
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("userID", id);
 		
 		RequestDispatcher rdID = request.getRequestDispatcher("UserDashboard.jsp");
 		rdID.forward(request, response);
-		//request.setAttribute("userID", id);
-		
-	    
-	    		/*
-			    if(email.equals("username") && password.equals("password")) {
-			    	
-			    	boolean validCredentials = true;
-			    	String q = "SELECT user_id FROM quizit.user WHERE user_email = 'test@email.com';"; // how to identify the unique email chosen?
-			    	// 3. session attribute passing
-			    	HttpSession session = request.getSession();
-			    	ResultSet rs = DBUtility.executeQuery(q);
-					try {
-						request.setAttribute("userID", rs.getString(1) );
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					RequestDispatcher rd = request.getRequestDispatcher("LoginPage.jsp");
-					rd.forward(request, response);
-			    	response.sendRedirect("welcome.jsp");
-			    }
-			    else if(!password.equals("password")) {
-					HttpSession session = request.getSession();
-					request.setAttribute("password", "false");
-					RequestDispatcher rd = request.getRequestDispatcher("LoginPage.jsp");
-					rd.forward(request, response);
-			    }
-			    */
 	}
 
 }

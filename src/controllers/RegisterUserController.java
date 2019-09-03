@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -73,7 +75,7 @@ public class RegisterUserController extends HttpServlet {
 		
 		//TO-DO: Check if user email already exists
 		
-		if(DBUtility.existsinDB("`quizit`.`user`", userEmail, "user_email")) {
+		if(DBUtility.existsinDB("`quizit`.`user`", userEmail, "user_email") == 1) {
 			request.setAttribute("emailExists", "true");
 			RequestDispatcher rd = request.getRequestDispatcher("RegisterPage.jsp");
 			rd.forward(request, response);
@@ -90,9 +92,20 @@ public class RegisterUserController extends HttpServlet {
 				+ "values('" + userFirstName +"','" + userLastName + "','" + userEmail + "', '" + userPassword +"', 'user' )";
 		System.out.println(DBUtility.updateQuery(query));
 		
-		HttpSession session = request.getSession();
+		String queryId = "SELECT user_id FROM `quizit`.`user` WHERE user_email = '" + userEmail + "';";
+		System.out.println("Select userID Query: " + queryId);
+		ResultSet rsID = DBUtility.executeQuery(queryId);
+		String id = "";
+		try {
+			rsID.next();
+			id = rsID.getString("user_id");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		session.setAttribute("userID", "2");
+		HttpSession session = request.getSession();
+		session.setAttribute("userID", id);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("UserDashboard.jsp");
 		rd.forward(request, response);

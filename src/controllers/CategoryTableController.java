@@ -83,7 +83,8 @@ public class CategoryTableController extends HttpServlet {
 				out.println("<tr>");
 				out.println("<td>" + rsCat.getString("category_name") + "</td>");
 				out.println("<td>" + rsCat.getString("category_description") + "</td>");
-				out.println("<td><a href=\"QuizLandingPage.jsp\"><button>Take Quiz</button></a></td>");
+				out.println("<td><a href=\"QuizLandingPage.jsp\"><button name  ='selectedCat' value='"+ 
+								rsCat.getString("category_name") +"'>Take Quiz</button></a></td>");
 				out.println("</tr>");
 			}
 		} catch (SQLException e) {
@@ -94,7 +95,6 @@ public class CategoryTableController extends HttpServlet {
 		}
 		out.println("</tbody>");
 		out.println("</table>");
-		out.flush();
 		
 	}
 
