@@ -14,7 +14,7 @@
         String catID = "";
         try {
             id = (String) session.getAttribute("userID");
-            catID = request.getParameter("submit");
+            catID = request.getParameter("selectedCat");
             System.out.println(catID);
         } catch (Exception e) {
             e.printStackTrace();

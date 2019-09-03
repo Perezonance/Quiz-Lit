@@ -231,7 +231,6 @@ public class DBUtility {
 		return rs;
 	}
 	public static ResultSet executeQuery(String query) {
-		System.out.println(query);
 		ResultSet rs = null;
 		Statement st;
 		try {
@@ -264,17 +263,16 @@ public class DBUtility {
 		}
 		return "";
 	}
-	public static boolean existsinDB(String table, String value, String columnType) {
+	public static int existsinDB(String table, String value, String columnType) {
 		String query = "SELECT `" + columnType + "` FROM " + table + " WHERE `" + columnType + "` = '" + value + "';";
-		System.out.println(query);
 		ResultSet rs = executeQuery(query);
-		System.out.println(printResultSet(rs));
-		boolean response = false;
+		int response = 3;
 		try {
-			if(rs.getString(1).equals(value))
-				response = true;
+			rs.next();
+			if(rs.getString(columnType).equals(value))
+				response = 1;
 			else
-				response = false;
+				response = -1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
