@@ -26,7 +26,7 @@
 		String fName = rs.getString("user_first_name");
 			%>
 		<h1>Welcome to Quiz Lit, <%= fName %>!</h1>
-		<br>
+		<br>`
 		<div class="category-table">
 			
 			  	<% RequestDispatcher rd = request.getRequestDispatcher("CategoryTableController");

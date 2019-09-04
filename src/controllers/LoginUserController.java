@@ -116,18 +116,28 @@ public class LoginUserController extends HttpServlet {
 		 * 2. USe the resultset to determin if the user is admin or user
 		 * 3. Use request Dispatcher to forward them to the correct dashboard page
 		 */
-		
-		
-		
-		
-		
-		
-		HttpSession session = request.getSession();
-		
-		session.setAttribute("userID", id);
-		
-		RequestDispatcher rdID = request.getRequestDispatcher("UserDashboard.jsp");
-		rdID.forward(request, response);
+		String queryAdmin = "SELECT user_role_type FROM quizit.user WHERE user_email = '" + email + "';";
+        ResultSet rsAdmin = DBUtility.executeQuery(queryAdmin);
+        HttpSession session = request.getSession();
+        try {
+            rsAdmin.first();
+            if(rsAdmin.getString(1).equals("admin")) {
+            	System.out.println("Admin Successfully Logged in!");
+                session.setAttribute("userID", id);
+                RequestDispatcher rdadmin = request.getRequestDispatcher("AdminDashboard.jsp");
+                rdadmin.forward(request, response);
+            }else {
+            	System.out.println("User Successfully Logged in!");
+                session.setAttribute("userID", id);
+                RequestDispatcher rdID = request.getRequestDispatcher("UserDashboard.jsp");
+                rdID.forward(request, response);
+            }
+        } catch (SQLException e) {
+    	// TODO Auto-generated catch block
+        	e.printStackTrace();
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
 	}
 
 }
