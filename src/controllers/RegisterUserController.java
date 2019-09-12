@@ -102,14 +102,8 @@ public class RegisterUserController extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("userID", id);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("UserDashboard.jsp");
-		rd.forward(request, response);
-		
 	}
-
 }

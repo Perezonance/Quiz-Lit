@@ -1,30 +1,32 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dbUtilities.DBUtility;
 
 /**
- * Servlet implementation class CategoryTableController
+ * Servlet implementation class UserCatSelectionController
  */
-@WebServlet("/CategoryTableController")
-public class CategoryTableController extends HttpServlet {
+@WebServlet("/UserCatSelectionController")
+public class UserCatSelectionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CategoryTableController() {
+    public UserCatSelectionController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,6 +36,7 @@ public class CategoryTableController extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		DBUtility db = new DBUtility(new File("dbAccess.properties"));
 	}
 
 	/**
@@ -48,7 +51,6 @@ public class CategoryTableController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
 	}
 
 	/**
@@ -56,41 +58,25 @@ public class CategoryTableController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		//All Output will be translated as html text
 		response.setContentType("text/html");
 		
-		String queryCat = "SELECT * FROM `quizit`.`category`;";
+		String catName = request.getParameter("cat");
 		
-		ResultSet rsCat = DBUtility.executeQuery(queryCat);
-		PrintWriter out = response.getWriter();
-		out.println("<center>");
-		out.println("<table class=\"fixed_header\">");
-			out.println("<thead>");
-				out.println("<tr>");
-					out.println("<th>Quiz Category</th>");
-					out.println("<th>Description</th>");
-					out.println("<th>Take Quiz</th>");
-				out.println("</tr>");
-			out.println("</thead>");
-			out.println("<tbody>");
+		String query = "SELECT category_id FROM `quizit`.`category` WHERE category_name ='" + catName + "';";
+		ResultSet rs = DBUtility.executeQuery(query);
+		String id = "";
 		try {
-			while(rsCat.next()) {
-				out.println("<tr>");
-				out.println("<td>" + rsCat.getString("category_name") + "</td>");
-				out.println("<td>" + rsCat.getString("category_description") + "</td>");
-				out.println("<td><form action='UserCatSelectionController' method='post'><input type='submit' name = 'cat' value='" + rsCat.getString("category_name") + "'></form></td>");
-				out.println("</tr>");
-			}
+			rs.first();
+			id = rs.getString("category_id");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		out.println("</tbody>");
-		out.println("</table>");
 		
+		HttpSession session = request.getSession();
+		session.setAttribute("categoryID", id);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("QuizLandingPage.jsp");
+		rd.forward(request, response);
 	}
 
 }
